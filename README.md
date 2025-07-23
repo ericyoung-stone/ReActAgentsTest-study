@@ -93,5 +93,8 @@ https://www.bilibili.com/video/BV15xLgzgEPc/
 对应文件夹:05_FineTuning                      
 
                                
-          
+## 使用已有的python环境uv venv安装
+若 uv venv --python 3.11 报错无法安装
+先用conda 创建3.11的env环境
+再uv venv --python $(which python3.11)
 
