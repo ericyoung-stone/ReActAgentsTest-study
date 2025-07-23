@@ -94,7 +94,10 @@ pip install concurrent-log-handler==0.9.28
 进入到docker/postgresql下执行 docker-compose up -d 运行PostgreSQL服务                                         
 进入到docker/redis下执行 docker-compose up -d 运行Redis服务                                            
 运行成功后可在Docker Desktop软件中进行管理操作或使用命令行操作或使用指令                     
-使用数据库客户端软件远程登陆进行可视化操作，这里使用Navicat客户端软件和Redis-Insight客户端软件                         
+使用数据库客户端软件远程登陆进行可视化操作，这里使用Navicat客户端软件和Redis-Insight客户端软件
+![img.png](img.png)
+
+![img_1.png](img_1.png)
 
 ## 4.2 功能测试          
 进入04_ReActAgentHILApiTest文件夹下运行脚本进行测试，支持多用户访问                    
