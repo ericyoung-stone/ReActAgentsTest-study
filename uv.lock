@@ -1090,6 +1090,7 @@ dependencies = [
     { name = "langgraph" },
     { name = "langgraph-checkpoint-postgres" },
     { name = "pip" },
+    { name = "pydantic" },
     { name = "redis" },
     { name = "rich" },
 ]
@@ -1105,6 +1106,7 @@ requires-dist = [
     { name = "langgraph", specifier = "==0.4.5" },
     { name = "langgraph-checkpoint-postgres", specifier = "==2.0.21" },
     { name = "pip", specifier = ">=25.1.1" },
+    { name = "pydantic", specifier = ">=2.11.7" },
     { name = "redis", specifier = "==6.2.0" },
     { name = "rich", specifier = "==14.0.0" },
 ]

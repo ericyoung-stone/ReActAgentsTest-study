@@ -1,0 +1,10 @@
+langgraph
+langchain
+langchain-openai
+langchain-mcp-adapters
+langgraph-checkpoint-postgres
+rich==14.0.0
+fastapi==0.115.12
+redis==6.2.0
+concurrent-log-handler==0.9.28
+celery==5.5.3
