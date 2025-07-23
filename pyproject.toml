@@ -9,6 +9,7 @@ dependencies = [
     "concurrent-log-handler==0.9.28",
     "fastapi==0.115.12",
     "langchain==0.3.25",
+    "langchain-mcp-adapters==0.1.0",
     "langchain-openai==0.3.17",
     "langgraph==0.4.5",
     "langgraph-checkpoint-postgres==2.0.21",
