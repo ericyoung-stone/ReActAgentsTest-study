@@ -3,22 +3,21 @@ from langgraph.checkpoint.memory import InMemorySaver
 from langgraph.prebuilt import create_react_agent
 from langchain_mcp_adapters.client import MultiServerMCPClient
 from langchain_core.messages import SystemMessage, HumanMessage
-from langchain.chat_models import init_chat_model
-from typing import Dict, List, Any
+from typing import List, Any
 
-
+from common.local_llm import get_lm_studio_llm
 
 # Author:@南哥AGI研习社 (B站 or YouTube 搜索“南哥AGI研习社”)
 
 
 # 使用langgraph推荐方式定义大模型
-llm = init_chat_model(
-    model="openai:deepseek-v3",
-    temperature=0,
-    base_url="https://nangeai.top/v1",
-    api_key="sk-1N7kCCLpLMs58uCPGt333cl0sttCxmU7OY23238OMTpREAdEEK"
-)
-
+# llm = init_chat_model(
+#     model="openai:deepseek-v3",
+#     temperature=0,
+#     base_url="https://nangeai.top/v1",
+#     api_key="sk-1N7kCCLpLMs58uCPGt333cl0sttCxmU7OY23238OMTpREAdEEK"
+# )
+llm = get_lm_studio_llm()
 
 # 解析消息列表
 def parse_messages(messages: List[Any]) -> None:
@@ -141,7 +140,7 @@ async def run_agent():
 
     # # 1、非流式处理查询
     # # 高德地图接口测试
-    # agent_response = await agent.ainvoke({"messages": [HumanMessage(content="这个118.79815,32.01112经纬度对应的地方是哪里")]}, config)
+    agent_response = await agent.ainvoke({"messages": [HumanMessage(content="这个118.79815,32.01112经纬度对应的地方是哪里")]}, config)
     # # agent_response = await agent.ainvoke({"messages": [HumanMessage(content="夫子庙的经纬度坐标是多少")]}, config)
     # # agent_response = await agent.ainvoke({"messages": [HumanMessage(content="112.10.22.229这个IP所在位置")]}, config)
     # # agent_response = await agent.ainvoke({"messages": [HumanMessage(content="上海的天气如何")]}, config)
@@ -155,9 +154,9 @@ async def run_agent():
     # # agent_response = await agent.ainvoke({"messages": [HumanMessage(content="POI为B00155LA8A的详细信息")]}, config)
     # # agent_response = await agent.ainvoke({"messages": [HumanMessage(content="在上海豫园周围10公里的中石化的加油站")]}, config)
     # # 将返回的messages进行格式化输出
-    # parse_messages(agent_response['messages'])
-    # agent_response_content = agent_response["messages"][-1].content
-    # print(f"agent_response:{agent_response_content}")
+    parse_messages(agent_response['messages'])
+    agent_response_content = agent_response["messages"][-1].content
+    print(f"agent_response:{agent_response_content}")
 
 
     # 2、流式处理查询
