@@ -8,19 +8,19 @@ from langchain.chat_models import init_chat_model
 from typing import Dict, List, Any
 from langgraph.store.postgres import AsyncPostgresStore
 
-
+from common.local_llm import get_lm_studio_llm
 
 # Author:@南哥AGI研习社 (B站 or YouTube 搜索“南哥AGI研习社”)
 
 
 # 使用langgraph推荐方式定义大模型
-llm = init_chat_model(
-    model="openai:deepseek-v3",
-    temperature=0,
-    base_url="https://nangeai.top/v1",
-    api_key="sk-gOICqMerPEOUrXwi0xadESaAoTikvn1zoGKUuFE3dli82NxY"
-)
-
+# llm = init_chat_model(
+#     model="openai:deepseek-v3",
+#     temperature=0,
+#     base_url="https://nangeai.top/v1",
+#     api_key="sk-gOICqMerPEOUrXwi0xadESaAoTikvn1zoGKUuFE3dli82NxY"
+# )
+llm = get_lm_studio_llm()
 
 # @tool("book_hotel",description="提供预订酒店的工具")
 @tool("book_hotel",description="预定酒店的工具")

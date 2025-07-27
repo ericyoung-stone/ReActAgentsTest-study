@@ -11,20 +11,19 @@ from langgraph.prebuilt.interrupt import HumanInterruptConfig, HumanInterrupt
 from langchain_core.runnables import RunnableConfig
 from langgraph.types import interrupt, Command
 
-
-
+from common.local_llm import get_lm_studio_llm
 
 # Author:@南哥AGI研习社 (B站 or YouTube 搜索“南哥AGI研习社”)
 
 
 # 使用langgraph推荐方式定义大模型
-llm = init_chat_model(
-    model="openai:deepseek-v3",
-    temperature=0,
-    base_url="https://nangeai.top/v1",
-    api_key="sk-d8bOCyecbFvAj2xj9G3tViJ3akRcp25CQTl3eaUWnPLxvewD14rImbp0"
-)
-
+# llm = init_chat_model(
+#     model="openai:deepseek-v3",
+#     temperature=0,
+#     base_url="https://nangeai.top/v1",
+#     api_key="sk-d8bOCyecbFvAj2xj9G3tViJ3akRcp25CQTl3eaUWnPLxvewD14rImbp0"
+# )
+llm = get_lm_studio_llm()
 
 # 定义一个函数，用于为工具添加人工审查（human-in-the-loop）功能
 # 参数：tool（可调用对象或 BaseTool 对象），interrupt_config（可选的人工中断配置）
@@ -216,6 +215,7 @@ async def run_agent():
     parse_messages(agent_response['messages'])
     agent_response_content = agent_response["messages"][-1].content
     print(f"agent_response:{agent_response_content}")
+    print(f"agent_response __interrupt__:{agent_response['__interrupt__']}")
 
     # (1)模拟人类反馈：测试3种反馈方式
     agent_response = agent.invoke(

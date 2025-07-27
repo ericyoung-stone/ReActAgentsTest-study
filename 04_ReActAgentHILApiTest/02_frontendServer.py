@@ -9,6 +9,7 @@ from rich.panel import Panel
 from rich.markdown import Markdown
 from rich.theme import Theme
 from rich.progress import Progress
+from utils.config import Config
 
 
 
@@ -30,7 +31,7 @@ custom_theme = Theme({
 console = Console(theme=custom_theme)
 
 # 后端API地址
-API_BASE_URL = "http://localhost:8001"
+API_BASE_URL = f"http://{Config.HOST}:{Config.PORT}"
 
 
 # 调用智能体处理查询，并等待完成或中断

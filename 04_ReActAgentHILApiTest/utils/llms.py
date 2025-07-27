@@ -2,8 +2,8 @@ import os
 import logging
 from concurrent_log_handler import ConcurrentRotatingFileHandler
 from langchain_openai import ChatOpenAI,OpenAIEmbeddings
-from .config import Config
-
+from pydantic import SecretStr
+from utils.config import Config
 
 
 # Author:@南哥AGI研习社 (B站 or YouTube 搜索“南哥AGI研习社”)
@@ -58,12 +58,18 @@ MODEL_CONFIGS = {
         "api_key": "ollama",
         "chat_model": "llama3.1:8b",
         "embedding_model": "nomic-embed-text:latest"
+    },
+    "lmstudio": {
+        "base_url": "http://192.168.1.22:1234/v1",
+        "api_key": "lmstudio",
+        "chat_model": "qwen3-4b",
+        "embedding_model": "text-embedding-nomic-embed-text-v1.5-embedding"
     }
 }
 
 
 # 默认配置
-DEFAULT_LLM_TYPE = "openai"
+DEFAULT_LLM_TYPE = "lmstudio"
 DEFAULT_TEMPERATURE = 0
 
 
@@ -99,16 +105,16 @@ def initialize_llm(llm_type: str = DEFAULT_LLM_TYPE) -> tuple[ChatOpenAI, OpenAI
         # 创建LLM实例
         llm_chat = ChatOpenAI(
             base_url=config["base_url"],
-            api_key=config["api_key"],
+            api_key=SecretStr(config["api_key"]),
             model=config["chat_model"],
             temperature=DEFAULT_TEMPERATURE,
             timeout=30,  # 添加超时配置（秒）
-            max_retries=2  # 添加重试次数
+            max_retries=3  # 添加重试次数
         )
 
         llm_embedding = OpenAIEmbeddings(
             base_url=config["base_url"],
-            api_key=config["api_key"],
+            api_key=SecretStr(config["api_key"]),
             model=config["embedding_model"],
             deployment=config["embedding_model"]
         )
@@ -148,7 +154,7 @@ def get_llm(llm_type: str = DEFAULT_LLM_TYPE) -> ChatOpenAI:
 if __name__ == "__main__":
     try:
         # 测试不同类型的LLM初始化
-        llm_openai, llm_embedding = get_llm("openai")
+        llm_openai, llm_embedding = get_llm("llmstudio")
 
         # 测试无效类型
         llm_invalid = get_llm("invalid_type")

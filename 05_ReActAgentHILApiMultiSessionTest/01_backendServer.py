@@ -644,9 +644,9 @@ async def lifespan(app: FastAPI):
             app.state.agent = create_react_agent(
                 model=llm_chat,
                 tools=tools,
-                pre_model_hook=trimmed_messages_hook,
-                checkpointer=app.state.checkpointer,
-                store=app.state.store
+                pre_model_hook=trimmed_messages_hook, # 历史消息裁剪
+                checkpointer=app.state.checkpointer, # 短期记忆
+                store=app.state.store # 长期记忆
             )
             logger.info("Agent初始化成功")
 

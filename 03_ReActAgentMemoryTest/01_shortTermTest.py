@@ -7,19 +7,19 @@ from langchain.chat_models import init_chat_model
 from typing import Dict, List, Any
 from langchain_core.messages.utils import count_tokens_approximately, trim_messages
 
-
+from common.local_llm import get_lm_studio_llm
 
 # Author:@南哥AGI研习社 (B站 or YouTube 搜索“南哥AGI研习社”)
 
 
 # 使用langgraph推荐方式定义大模型
-llm = init_chat_model(
-    model="openai:deepseek-v3",
-    temperature=0,
-    base_url="https://nangeai.top/v1",
-    api_key="sk-gOICqMerPEOUrXwi0xadESaAoTikvn1zoGKUuFE3dli82NxY"
-)
-
+# llm = init_chat_model(
+#     model="openai:deepseek-v3",
+#     temperature=0,
+#     base_url="https://nangeai.top/v1",
+#     api_key="sk-gOICqMerPEOUrXwi0xadESaAoTikvn1zoGKUuFE3dli82NxY"
+# )
+llm = get_lm_studio_llm()
 
 # @tool("book_hotel",description="提供预订酒店的工具")
 @tool("book_hotel",description="预定酒店的工具")
@@ -157,15 +157,15 @@ async def run_agent():
             tools=tools,
             prompt=system_message,
             # 一个可选的节点，用于添加在agent节点之前
-            # pre_model_hook=pre_model_hook,
+            pre_model_hook=pre_model_hook,  # 历史消息裁剪(总结/裁剪)
             checkpointer=checkpointer,
         )
 
         # 将定义的agent的graph进行可视化输出保存至本地
-        save_graph_visualization(agent)
+        # save_graph_visualization(agent, filename="graph2.png")
 
         # 定义thread_id
-        config = {"configurable": {"thread_id": "1"}}
+        config = {"configurable": {"thread_id": "2"}}
 
         # 获取线程对关联的state
         # state_result = await checkpointer.aget_tuple(config)
